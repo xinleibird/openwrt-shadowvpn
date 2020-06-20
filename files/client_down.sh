@@ -21,7 +21,7 @@ route_mode=$(uci get shadowvpn.@shadowvpn[-1].route_mode_save 2>/dev/null)
 
 # Turn off NAT over VPN
 iptables -t nat -D POSTROUTING -o $intf -j MASQUERADE
-iptables -D FORWARD -i $intf -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -D FORWARD -i $intf -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 iptables -D FORWARD -o $intf -j ACCEPT
 loger notice "Turn off NAT over $intf"
 
